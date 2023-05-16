@@ -1,0 +1,69 @@
+#include<stdio.h>
+#define MAXLINE 20
+int getline(char s[],int lim);
+int redelete(char s[],int lim);
+main()
+{int len,max;
+char line[MAXLINE];
+char longest[MAXLINE];
+while((len=getline(line,MAXLINE))>0)
+{
+	if (len==1)//将一个字符的行单独提取出来，也即只包含\n的行 ，不然在调用redelete函数时，该行打印不出来 
+	printf("%s %d",line,len);
+	else
+	{
+	if((max=redelete(line,MAXLINE))>0)
+	{
+	printf("%s",line);
+	printf("%d\n",max);
+}
+	else
+	printf("%d",max);
+}
+}
+  
+}
+   int getline(char s[],int lim)
+   {
+   	int c,i;
+   	for(i=0;i<lim-1&&(c=getchar())!=EOF&&c!='\n';++i)
+   	s[i]=c;
+   	if(c=='\n')
+   	{
+   		s[i]='\n';
+   		++i;
+	   }
+   	s[i]='\0';
+   	return i;
+	} 
+	int redelete(char s[],int lim)
+	{
+		int i;
+		i=0;
+		while(s[i]!='\n'&&s[i]!='\0')//找出尾部，有两种情况：1、未溢出，以\n为尾部；2、溢出，以\0为尾部 
+		++i;
+		if(i==lim-1)//溢出，以\0为尾部，数组长度为MAXLINE-1 
+		{--i;
+		while(i>=0&&s[i]==' '||s[i]=='\t')
+		--i;
+		if(i>=0)//非空格行时，i>=0; 空格行时i为-1 
+		{
+			++i;
+			s[i]='\0';
+		}
+	    }
+		else//未溢出情况 
+		{
+			--i;
+			while(i>=0&&s[i]==' '||s[i]=='\t')
+			--i;
+			if(i>=0)//非空格行时，i>=0; 空格行时i为-1 
+			{
+				++i;
+				s[i]='\n';
+				++i;
+				s[i]='\0';
+			}
+		}
+		return i;//空格行时返回-1；非空格行时返回值>=1 
+	}
