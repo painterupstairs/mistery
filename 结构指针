@@ -1,0 +1,16 @@
+struct{
+int len;
+char *str;
+}*p;
+p->len++   合法
+++p->len   合法
+p++->len   合法
+(++p)->len  合法
+p->++len   不合法
+p->(++len)  不合法
+*p->str++    先取str指向的值，再str加1
+*p->++str 不合法
+*p->(++str) 不合法
+++*p->str ==(*p->str)++ 将str指向的值加1   
+*p++->str  先取p->str,在将p+1
+*++p->str 先取str，将str加1，在取str所指向的值
