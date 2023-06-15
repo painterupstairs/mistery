@@ -14,3 +14,17 @@ p->(++len)  不合法
 ++*p->str ==(*p->str)++ 将str指向的值加1   
 *p++->str  先取p->str,在将p+1
 *++p->str 先取str，将str加1，在取str所指向的值
+***************************************************************
+struct point{
+int a;
+int b;
+}a;
+sizeof(point),sizeof(struct point),sizeof(a)功能均一样；
+sizeof(point)成立的前提就是，函数中没有其他名为point的变量，则会默认是所定义的结构
+定义结构变量时point a;有时也是成立的，同样前提就是函数中没有其他名为point的变量，则会默认是所定义的结构
+typedef struct point{
+int a;
+int b;
+}*p;
+定义变量时，*p=*a；和p=a；是一样的吧
+
