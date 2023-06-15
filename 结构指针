@@ -22,9 +22,15 @@ int b;
 sizeof(point),sizeof(struct point),sizeof(a)功能均一样；
 sizeof(point)成立的前提就是，函数中没有其他名为point的变量，则会默认是所定义的结构
 定义结构变量时point a;有时也是成立的，同样前提就是函数中没有其他名为point的变量，则会默认是所定义的结构
-typedef struct point{
+typedef struct student{
 int a;
 int b;
-}*p;
+}Point，*p;
 定义变量时，*p=*a；和p=a；是一样的吧
-
+有了typedef，似乎结构体标签可有可无，其实不然，如果Point类型要暴露给其他模块，那么必须写在头文件中，这将同时暴露所有结构体程序，这有时
+违背了设计者的意愿，可能设计者希望其他模块只通过提供的API来访问Point，或者有些成员仅仅是内部使用，使用结构体标签就可以避免这个问题
+我们将结构体定义写在源文件中，头文件仅包含结构体的声明。
+strutc student;
+extern struct point* create_student(const char*name);
+extern void set_student_age(struct student *s,int age);
+使用者不能自己创建student类型的对象，只能通过create_student来获取，也不能通过获取到的指针访问成员age，而必须通过set_student_age函数接口
